@@ -1,0 +1,5 @@
+---
+roles:
+  - name: consul
+    src: https://github.com/ansible-community/ansible-consul.git
+    version: master

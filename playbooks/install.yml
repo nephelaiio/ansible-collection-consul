@@ -1,0 +1,7 @@
+---
+- name: Prepare stack nodes
+  ansible.builtin.import_playbook: pokerops.consul.prepare
+
+
+- name: Deploy proxy nodes
+  ansible.builtin.import_playbook: pokerops.consul.deploy

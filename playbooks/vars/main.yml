@@ -1,0 +1,14 @@
+---
+_consul_hostgroup: "{{ consul_group | default('consul') }}"
+_consul_release: "{{ consul_release | default('1.18.1') }}"
+
+_consul_config_hostnames: "{{ consul_config_hostnames | default(True) | bool }}"
+_consul_datacenter: "{{ consul_datacenter_name | default('consul') }}"
+_consul_backup_retention: "{{ consul_backup_retention | default('1440') }}"
+_consul_backup_minutes: "{{ consul_backup_period | default('*/5') }}"
+_consul_backup_hours: "{{ consul_backup_period | default('*') }}"
+_consul_backup_days: "{{ consul_backup_period | default('*') }}"
+_consul_backup_path: "{{ consul_backup_path | default('/backups/consul') }}"
+_consul_backup_bin: "{{ consul_backup_bin | default('/usr/local/bin/consul-backup') }}"
+_consul_restore_bin: "{{ consul_backup_bin | default('/usr/local/bin/consul-restore') }}"
+_consul_install_from_repo: "{{ (consul_install_from_repo | default(False)) | bool }}"

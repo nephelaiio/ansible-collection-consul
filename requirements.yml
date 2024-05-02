@@ -1,0 +1,7 @@
+---
+roles: []
+collections:
+  - name: pokerops.consul
+    source: .
+    type: dir
+  - name: nephelaiio.plugins

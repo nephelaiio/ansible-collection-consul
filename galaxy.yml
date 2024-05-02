@@ -1,0 +1,19 @@
+---
+namespace: pokerops
+name: consul
+version: 0.0.1
+readme: README.md
+authors:
+  - Ted Cook <358176+teddyphreak@users.noreply.github.com>
+description: your collection description
+license:
+  - MIT
+tags:
+  - consul
+dependencies:
+  "nephelaiio.plugins": "*"
+repository: http://github.com/pokerops/ansible-collection-consul
+documentation: http://github.com/pokerops/ansible-collection-consul
+homepage: http://github.com/pokerops/ansible-collection-consul
+issues: http://github.com/pokerops/ansible-collection-consul/issues
+build_ignore: []
