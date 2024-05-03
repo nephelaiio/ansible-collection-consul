@@ -41,14 +41,17 @@
       ansible.builtin.include_role:
         name: pokerops.consul.consul
       vars:
-        consul_version: "{{ _consul_release }}"
+        _install_from_repo: "{{ _consul_install_from_repo }}"
+        _release_package: "{{ _consul_release_package }}"
+        _release_binary: "{{ _consul_release_binary }}"
+        consul_version: "{{ _install_from_repo | ternary(_release_package, _release_binary) }}"
         consul_bootstrap_expect: true
         consul_bootstrap_expect_value: "{{ groups[_consul_hostgroup] | length }}"
         consul_group_name: "{{ _consul_hostgroup }}"
         consul_datacenter: "{{ _consul_datacenter | regex_replace('[.]', '_') }}"
         consul_encrypt_enable: false
         consul_os_repo_prerequisites: []
-        consul_bin_path: "{{ _consul_install_from_repo | ternary('/usr/bin', '/usr/local/bin') }}"
+        consul_bin_path: "{{ _install_from_repo | ternary('/usr/bin', '/usr/local/bin') }}"
         consul_install_dependencies: false
         consul_os_packages:
           - unzip

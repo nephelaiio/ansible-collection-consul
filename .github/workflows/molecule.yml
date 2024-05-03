@@ -37,8 +37,6 @@ jobs:
           - binary
           - repo
         image:
-          - name: ubuntu2404
-            command: /lib/systemd/systemd
           - name: ubuntu2204
             command: /lib/systemd/systemd
           - name: ubuntu2004

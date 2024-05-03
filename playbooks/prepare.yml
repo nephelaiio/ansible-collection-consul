@@ -20,11 +20,16 @@
     - name: Install yum prerequisites
       ansible.builtin.package:
         name:
+          - acl
           - cronie
+          - yum-utils
+          - python3-dnf-plugin-versionlock
       when: ansible_os_family == 'RedHat'
 
     - name: Install apt prerequisites
       ansible.builtin.package:
         name:
+          - acl
           - cron
+          - gpg-agent
       when: ansible_os_family == 'Debian'
