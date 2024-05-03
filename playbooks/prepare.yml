@@ -20,6 +20,7 @@
     - name: Install yum prerequisites
       ansible.builtin.package:
         name:
+          - acl
           - cronie
           - yum-utils
           - python3-dnf-plugin-versionlock
@@ -28,5 +29,6 @@
     - name: Install apt prerequisites
       ansible.builtin.package:
         name:
+          - acl
           - cron
       when: ansible_os_family == 'Debian'
