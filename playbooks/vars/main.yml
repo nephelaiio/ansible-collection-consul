@@ -1,6 +1,8 @@
 ---
 _consul_hostgroup: "{{ consul_group | default('consul') }}"
-_consul_release: "{{ consul_release | default('1.18.1') }}"
+_consul_release: "{{ consul_release | default('1.18.1-1') }}"
+_consul_release_package: "{{ _consul_release }}"
+_consul_release_binary: "{{ _consul_release | split('-') | first }}"
 
 _consul_config_hostnames: "{{ consul_config_hostnames | default(True) | bool }}"
 _consul_datacenter: "{{ consul_datacenter_name | default('consul') }}"

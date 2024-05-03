@@ -30,7 +30,7 @@ Cluster wide parameters
 
 | Parameter               |                         Default | Description                            | Required |
 |:------------------------|--------------------------------:|:---------------------------------------|:---------|
-| consul_release          |                          1.18.1 | Consul release target                  | false    |
+| consul_release          |                        1.18.1-1 | Consul release target                  | false    |
 | consul_datacenter_name  |                        'consul' | Consul Datacenter name                 | false    |
 | consul_backup_path      |               '/backups/consul' | Consul snapshot backup path            | false    |
 | consul_backup_bin       | '/usr/local/bin/consul-snapshot | Consul snapshot backup script location | false    |
