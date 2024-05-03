@@ -31,4 +31,5 @@
         name:
           - acl
           - cron
+          - gpg-agent
       when: ansible_os_family == 'Debian'
