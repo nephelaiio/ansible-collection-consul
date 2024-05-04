@@ -18,16 +18,17 @@ The following is the list of parameters intended for end-user manipulation:
 
 Cluster wide parameters
 
-| Parameter               |                         Default | Description                            | Required |
-|:------------------------|--------------------------------:|:---------------------------------------|:---------|
-| consul_release          |                        1.18.1-1 | Consul release target                  | false    |
-| consul_datacenter_name  |                        'consul' | Consul Datacenter name                 | false    |
-| consul_backup_path      |               '/backups/consul' | Consul snapshot backup path            | false    |
-| consul_backup_bin       | '/usr/local/bin/consul-snapshot | Consul snapshot backup script location | false    |
-| consul_backup_retention |                            1440 | Consul snapshot retention in minutes   | false    |
-| consul_backup_minutes   |                          '\*/5' | Consul snapshot cronjob component      | false    |
-| consul_backup_hours     |                            '\*' | Consul snapshot cronjob component      | false    |
-| consul_backup_days      |                            '\*' | Consul snapshot cronjob component      | false    |
+| Parameter               |                         Default | Description                                 | Required |
+|:------------------------|--------------------------------:|:--------------------------------------------|:---------|
+| consul_release          |                        1.18.1-1 | Consul release target                       | false    |
+| consul_datacenter_name  |                        'consul' | Consul Datacenter name                      | false    |
+| consul_backup_path      |               '/backups/consul' | Consul snapshot backup path                 | false    |
+| consul_backup_bin       | '/usr/local/bin/consul-snapshot | Consul snapshot backup script location      | false    |
+| consul_backup_retention |                            1440 | Consul snapshot retention in minutes        | false    |
+| consul_backup_minutes   |                          '\*/5' | Consul snapshot cronjob component           | false    |
+| consul_backup_hours     |                            '\*' | Consul snapshot cronjob component           | false    |
+| consul_backup_days      |                            '\*' | Consul snapshot cronjob component           | false    |
+| consul_role             |                        'server' | Consul node role, one of ['server', client] | false    |
 
 ## Collection playbooks
 
