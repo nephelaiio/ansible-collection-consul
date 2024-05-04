@@ -7,7 +7,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: consul-binary-01
+  - name: consul-update-01
     image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2204}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     cgroupns_mode: host
@@ -20,7 +20,7 @@ platforms:
       - /opt
     groups:
       - consul
-  - name: consul-binary-02
+  - name: consul-update-02
     image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2204}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     cgroupns_mode: host
@@ -33,7 +33,7 @@ platforms:
       - /opt
     groups:
       - consul
-  - name: consul-binary-03
+  - name: consul-update-03
     image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2204}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     cgroupns_mode: host
@@ -56,12 +56,13 @@ provisioner:
   playbooks:
     prepare: ../common/prepare.yml
     converge: ../common/converge.yml
+    side_effect: ../common/update.yml
     verify: ../common/verify.yml
   inventory:
     hosts:
       all:
         vars:
-          consul_install_from_repo: false
+          consul_install_from_repo: true
 verifier:
   name: ansible
 scenario:

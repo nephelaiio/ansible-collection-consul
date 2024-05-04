@@ -5,22 +5,12 @@
 
 An [ansible collection](https://galaxy.ansible.com/ui/repo/published/pokerops/consul/) to install and manage [Consul](https://www.consul.io/) clusters
 
-## ToDo
-
-* Add CI harness
-* Add role dependencies
-* Add install playbook
-* Add install CI tests
-* Add update playbook
-* Add update CI tests
-* Publish collection
-
 ## Collection hostgroups
 
-| Hostgroup    | Default | Description    |
-|:-------------|--------:|:---------------|
-| consul_group | consul' | Consul cluster |
-|              |         |                |
+| Hostgroup                |              Default | Description                      |
+|:-------------------------|---------------------:|:---------------------------------|
+| consul_group             |             'consul' | Consul cluster members           |
+| consul_update_skip_group | 'consul_update_skip' | Consul cluster update skip hosts |
 
 ## Collection variables
 
