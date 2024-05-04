@@ -39,7 +39,7 @@
 
     - name: Deploy Consul cluster
       ansible.builtin.include_role:
-        name: pokerops.consul.consul
+        name: nephelaiio.consul.consul
       vars:
         _install_from_repo: "{{ _consul_install_from_repo }}"
         _release_package: "{{ _consul_release_package }}"

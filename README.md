@@ -1,9 +1,9 @@
-# Ansible Collection - pokerops.consul
+# Ansible Collection - nephelaiio.consul
 
-[![Build Status](https://github.com/pokerops/ansible-collection-consul/actions/workflows/molecule.yml/badge.svg)](https://github.com/pokerops/ansible-collection-consul/actions/wofklows/molecule.yml)
-[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-pokerops.consul-blue.svg)](https://galaxy.ansible.com/ui/repo/published/pokerops/consul/)
+[![Build Status](https://github.com/nephelaiio/ansible-collection-consul/actions/workflows/molecule.yml/badge.svg)](https://github.com/nephelaiio/ansible-collection-consul/actions/wofklows/molecule.yml)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-nephelaiio.consul-blue.svg)](https://galaxy.ansible.com/ui/repo/published/nephelaiio/consul/)
 
-An [ansible collection](https://galaxy.ansible.com/ui/repo/published/pokerops/consul/) to install and manage [Consul](https://www.consul.io/) clusters
+An [ansible collection](https://galaxy.ansible.com/ui/repo/published/nephelaiio/consul/) to install and manage [Consul](https://www.consul.io/) clusters
 
 ## Collection hostgroups
 
@@ -31,8 +31,8 @@ Cluster wide parameters
 
 ## Collection playbooks
 
-* pokerops.consul.install: Install and bootstrap cluster
-* pokerops.consul.update: Install and bootstrap cluster
+* nephelaiio.consul.install: Install and bootstrap cluster
+* nephelaiio.consul.update: Install and bootstrap cluster
 
 ## Testing
 

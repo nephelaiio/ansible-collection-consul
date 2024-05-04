@@ -1,5 +1,5 @@
 ---
-namespace: pokerops
+namespace: nephelaiio
 name: consul
 version: 0.0.3
 readme: README.md
@@ -12,8 +12,8 @@ tags:
   - consul
 dependencies:
   "nephelaiio.plugins": "*"
-repository: http://github.com/pokerops/ansible-collection-consul
-documentation: http://github.com/pokerops/ansible-collection-consul
-homepage: http://github.com/pokerops/ansible-collection-consul
-issues: http://github.com/pokerops/ansible-collection-consul/issues
+repository: http://github.com/nephelaiio/ansible-collection-consul
+documentation: http://github.com/nephelaiio/ansible-collection-consul
+homepage: http://github.com/nephelaiio/ansible-collection-consul
+issues: http://github.com/nephelaiio/ansible-collection-consul/issues
 build_ignore: []
