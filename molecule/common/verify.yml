@@ -7,12 +7,12 @@
   tasks:
     - name: Verify Consul server node role
       ansible.builtin.assert:
-        that: consul_role == 'server'
+        that: _consul_role == 'server'
       when: inventory_hostname in (groups['consul_server'] | default(groups['all']))
 
     - name: Verify Consul client node role
       ansible.builtin.assert:
-        that: consul_role == 'client'
+        that: _consul_role == 'client'
       when: inventory_hostname in (groups['consul_client'] | default([]))
 
     - name: Verify Consul cluster status
