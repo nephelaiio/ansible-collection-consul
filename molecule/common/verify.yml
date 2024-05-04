@@ -5,6 +5,16 @@
   vars_files:
     - ../../playbooks/vars/main.yml
   tasks:
+    - name: Verify Consul server node role
+      ansible.builtin.assert:
+        that: _consul_role == 'server'
+      when: inventory_hostname in (groups['consul_server'] | default(groups['all']))
+
+    - name: Verify Consul client node role
+      ansible.builtin.assert:
+        that: _consul_role == 'client'
+      when: inventory_hostname in (groups['consul_client'] | default([]))
+
     - name: Verify Consul cluster status
       block:
         - name: Query Consul node cluster status
@@ -22,21 +32,21 @@
             _status: "{{ _consul_node_status.stdout }}"
             _expected: 'alive'
 
-    - name: Verify Consul node type status
+    - name: Verify Consul node role
       block:
-        - name: Query Consul node cluster status
+        - name: Query Consul node role
           ansible.builtin.shell: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $4}'"
           register: _consul_node_type
           changed_when: false
 
-        - name: Check Consul node cluster status
+        - name: Check Consul node role
           ansible.builtin.assert:
             that: _status == _expected
             fail_msg: "Expected consul node type '{{ _expected }}', got '{{ _status }}'"
             success_msg: "Consul node type is '{{ _status }}'"
           vars:
             _status: "{{ _consul_node_type.stdout }}"
-            _expected: 'server'
+            _expected: '{{ _consul_role }}'
 
     - name: Verify Consul package locks
       when: _consul_install_from_repo
