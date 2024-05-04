@@ -5,45 +5,24 @@ dependency:
     role-file: requirements.yml
     requirements-file: requirements.yml
 driver:
-  name: docker
+  name: default
 platforms:
   - name: consul-update-01
-    image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2204}-ansible:latest"
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    cgroupns_mode: host
-    privileged: true
-    pre_build_image: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    tmpfs:
-      - /tmp
-      - /opt
+    image: "${MOLECULE_KVM_IMAGE}"
+    cpu: 2
+    memory: 4
     groups:
       - consul
   - name: consul-update-02
-    image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2204}-ansible:latest"
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    cgroupns_mode: host
-    privileged: true
-    pre_build_image: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    tmpfs:
-      - /tmp
-      - /opt
+    image: "${MOLECULE_KVM_IMAGE}"
+    cpu: 2
+    memory: 4
     groups:
       - consul
   - name: consul-update-03
-    image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2204}-ansible:latest"
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
-    cgroupns_mode: host
-    privileged: true
-    pre_build_image: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    tmpfs:
-      - /tmp
-      - /opt
+    image: "${MOLECULE_KVM_IMAGE}"
+    cpu: 2
+    memory: 4
     groups:
       - consul
 provisioner:
@@ -54,10 +33,12 @@ provisioner:
       allow_world_readable_tmpfiles: true
       callbacks_enabled: ansible.posix.profile_tasks
   playbooks:
+    create: ../common/create.yml
     prepare: ../common/prepare.yml
     converge: ../common/converge.yml
     side_effect: ../common/update.yml
     verify: ../common/verify.yml
+    destroy: ../common/destroy.yml
   inventory:
     hosts:
       all:
@@ -79,5 +60,6 @@ scenario:
     - create
     - prepare
     - converge
+    - verify
     - side_effect
     - verify
