@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pokerops-consul"
+name = "nephelaiio-consul"
 version = "0.1.0"
 description = ""
 authors = ["Ted Cook <teodoro.cook@gmail.com>"]

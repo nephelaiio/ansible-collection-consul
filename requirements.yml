@@ -1,7 +1,7 @@
 ---
 roles: []
 collections:
-  - name: pokerops.consul
+  - name: nephelaiio.consul
     source: .
     type: dir
   - name: nephelaiio.plugins
