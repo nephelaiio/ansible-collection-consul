@@ -10,7 +10,7 @@
     update_reboot: false
     update_cache_valid_time: 1
   roles:
-    - nephelaiio.patroni.update
+    - pokerops.consul.update
   tasks:
     - name: Stop Consul service
       ansible.builtin.service:
