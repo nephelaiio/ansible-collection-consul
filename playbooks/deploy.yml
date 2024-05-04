@@ -6,19 +6,22 @@
   vars_files:
     - main.yml
   tasks:
+    - name: Verify role settings
+      ansible.builtin.assert:
+        that: _consul_role in ['client', 'server']
+
+    - name: Group cluster members
+      ansible.builtin.group_by:
+        key: "_consul_{{ _consul_role }}"
+
     - name: Verify cluster group settings
       ansible.builtin.assert:
-        that: (groups[_consul_hostgroup] | length) in _sizes
-        fail_msg: "Consul group size must be one of [{{ _sizes | join(',') }}], found {{ _size }}"
+        that: (groups[_group] | length) in _sizes
+        fail_msg: "Number of Consul masters must be one of [{{ _sizes | join(',') }}], found {{ _size }}"
       vars:
-        _size: "{{ groups[_consul_hostgroup] | length }}"
+        _group: _consul_server
+        _size: "{{ groups[_group] | length }}"
         _sizes: [3, 5, 7]
-
-    - name: Initialize Consul roles
-      ansible.builtin.set_fact:
-        consul_node_role: "{{ _role }}"
-      vars:
-        _role: "{{ 'server' if inventory_hostname in groups[_consul_hostgroup] else 'client' }}"
 
     - name: Release Consul package holds
       block:
@@ -46,13 +49,14 @@
         _release_binary: "{{ _consul_release_binary }}"
         consul_version: "{{ _install_from_repo | ternary(_release_package, _release_binary) }}"
         consul_bootstrap_expect: true
-        consul_bootstrap_expect_value: "{{ groups[_consul_hostgroup] | length }}"
-        consul_group_name: "{{ _consul_hostgroup }}"
+        consul_bootstrap_expect_value: "{{ groups[consul_group_name] | length }}"
+        consul_group_name: "_consul_server"
         consul_datacenter: "{{ _consul_datacenter | regex_replace('[.]', '_') }}"
         consul_encrypt_enable: false
         consul_os_repo_prerequisites: []
         consul_bin_path: "{{ _install_from_repo | ternary('/usr/bin', '/usr/local/bin') }}"
         consul_install_dependencies: false
+        consul_node_role: "{{ _consul_role }}"
         consul_os_packages:
           - unzip
           - acl
