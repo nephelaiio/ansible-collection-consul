@@ -61,7 +61,6 @@ provisioner:
     hosts:
       all:
         vars:
-          consul_config_hostnames: false
           consul_install_from_repo: true
 verifier:
   name: ansible

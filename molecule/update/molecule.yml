@@ -1,0 +1,65 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+    requirements-file: requirements.yml
+driver:
+  name: default
+platforms:
+  - name: consul-update-01
+    image: "${MOLECULE_KVM_IMAGE}"
+    cpu: 2
+    memory: 4
+    groups:
+      - consul
+  - name: consul-update-02
+    image: "${MOLECULE_KVM_IMAGE}"
+    cpu: 2
+    memory: 4
+    groups:
+      - consul
+  - name: consul-update-03
+    image: "${MOLECULE_KVM_IMAGE}"
+    cpu: 2
+    memory: 4
+    groups:
+      - consul
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      remote_tmp: /tmp
+      allow_world_readable_tmpfiles: true
+      callbacks_enabled: ansible.posix.profile_tasks
+  playbooks:
+    create: ../common/create.yml
+    prepare: ../common/prepare.yml
+    converge: ../common/converge.yml
+    side_effect: ../common/update.yml
+    verify: ../common/verify.yml
+    destroy: ../common/destroy.yml
+  inventory:
+    hosts:
+      all:
+        vars:
+          consul_install_from_repo: true
+verifier:
+  name: ansible
+scenario:
+  prepare_sequence:
+    - prepare
+  converge_sequence:
+    - converge
+  destroy_sequence:
+    - destroy
+  cleanup_sequence:
+    - cleanup
+  test_sequence:
+    - dependency
+    - create
+    - prepare
+    - converge
+    - verify
+    - side_effect
+    - verify
