@@ -85,7 +85,7 @@
         path: "{{ _consul_backup_path }}"
         state: directory
         owner: consul
-        group: consul
+        group: "{{ _consul_group }}"
         mode: 0740
 
     - name: Create Consul backup script

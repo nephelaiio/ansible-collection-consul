@@ -1,5 +1,5 @@
 ---
-_consul_hostgroup: "{{ consul_group | default('consul') }}"
+_consul_hostgroup: "{{ consul_group_name | default('consul') }}"
 _consul_update_skip_hostgroup: "{{ consul_update_skip_group | default('consul_update_skip') }}"
 _consul_release: "{{ consul_release | default('1.18.1-1') }}"
 _consul_release_package: "{{ _consul_release }}"
@@ -15,3 +15,4 @@ _consul_backup_bin: "{{ consul_backup_bin | default('/usr/local/bin/consul-backu
 _consul_restore_bin: "{{ consul_backup_bin | default('/usr/local/bin/consul-restore') }}"
 _consul_install_from_repo: "{{ (consul_install_from_repo | default(False)) | bool }}"
 _consul_role: "{{ consul_role | default('server') }}"
+_consul_group: "{{ consul_group | default('consul') }}"
