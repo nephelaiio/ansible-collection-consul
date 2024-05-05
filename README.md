@@ -9,7 +9,7 @@ An [ansible collection](https://galaxy.ansible.com/ui/repo/published/nephelaiio/
 
 | Hostgroup                |              Default | Description                      |
 |:-------------------------|---------------------:|:---------------------------------|
-| consul_group             |             'consul' | Consul cluster members           |
+| consul_group_name        |             'consul' | Consul cluster members           |
 | consul_update_skip_group | 'consul_update_skip' | Consul cluster update skip hosts |
 
 ## Collection variables
@@ -28,6 +28,7 @@ Cluster wide parameters
 | consul_backup_minutes   |                          '\*/5' | Consul snapshot cronjob component           | false    |
 | consul_backup_hours     |                            '\*' | Consul snapshot cronjob component           | false    |
 | consul_backup_days      |                            '\*' | Consul snapshot cronjob component           | false    |
+| consul_group            |                         'consul | Consul OS group                             | false    |
 | consul_role             |                        'server' | Consul node role, one of ['server', client] | false    |
 
 ## Collection playbooks
