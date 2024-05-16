@@ -9,20 +9,14 @@ driver:
 platforms:
   - name: consul-update-01
     image: "${MOLECULE_KVM_IMAGE}"
-    cpu: 2
-    memory: 4
     groups:
       - consul
   - name: consul-update-02
     image: "${MOLECULE_KVM_IMAGE}"
-    cpu: 2
-    memory: 4
     groups:
       - consul
   - name: consul-update-03
     image: "${MOLECULE_KVM_IMAGE}"
-    cpu: 2
-    memory: 4
     groups:
       - consul
 provisioner:
@@ -43,6 +37,7 @@ provisioner:
     hosts:
       all:
         vars:
+          libvirt_platforms: "{{ molecule_yml.platforms }}"
           consul_install_from_repo: true
 verifier:
   name: ansible
