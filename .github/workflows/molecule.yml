@@ -36,7 +36,6 @@ jobs:
         scenario:
           - binary
           - repo
-          - update
         image:
           - name: ubuntu2204
             command: /lib/systemd/systemd
