@@ -19,6 +19,7 @@
 
     - name: Reboot node
       ansible.builtin.reboot:
+        reboot_timeout: "{{ consul_reboot_timeout | default(300) }}"
 
     - name: Verify Consul cluster status
       block:
