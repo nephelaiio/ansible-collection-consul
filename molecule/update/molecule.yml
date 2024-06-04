@@ -11,17 +11,14 @@ platforms:
     image: "${MOLECULE_KVM_IMAGE}"
     groups:
       - consul
-    size: 30G
   - name: consul-update-02
     image: "${MOLECULE_KVM_IMAGE}"
     groups:
       - consul
-    size: 30G
   - name: consul-update-03
     image: "${MOLECULE_KVM_IMAGE}"
     groups:
       - consul
-    size: 30G
 provisioner:
   name: ansible
   config_options:
