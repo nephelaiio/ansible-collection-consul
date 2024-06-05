@@ -27,8 +27,8 @@
         _status: "{{ _consul_node_status.stdout }}"
         _expected: 'alive'
       register: _consul_node_status
-      retries: 10
-      delay: 10
+      retries: "{{ consul_task_retries | default('10') }}"
+      delay: "{{ consul_task_delay | default('10') }}"
       until: _status == _expected
       changed_when: false
       no_log: true
@@ -39,7 +39,7 @@
         _status: "{{ _consul_node_type.stdout }}"
         _expected: 'server'
       register: _consul_node_type
-      retries: 10
-      delay: 10
+      retries: "{{ consul_task_retries | default('10') }}"
+      delay: "{{ consul_task_delay | default('10') }}"
       until: _status == _expected
       changed_when: false
