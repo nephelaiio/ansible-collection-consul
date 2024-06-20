@@ -61,10 +61,6 @@
           - unzip
           - acl
 
-    - name: Force daemon reload
-      ansible.builtin.systemd_service:
-        daemon_reload: true
-
     - name: Release Consul package holds
       when:
         - _consul_release is defined
@@ -144,3 +140,9 @@
         minute: "{{ _consul_backup_minutes }}"
         hour: "{{ _consul_backup_hours }}"
         day: "{{ _consul_backup_days }}"
+
+  handlers:
+    - name: Force daemon reload
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+      listen: restart consul
