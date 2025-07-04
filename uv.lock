@@ -359,12 +359,6 @@ wheels = [
 ]
 
 [[package]]
-name = "libvirt-python"
-version = "11.5.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/ed/de/4df830b99ba869670d4425176421ae6fe99d6a24d9e97efbddddffcac6e0/libvirt-python-11.5.0.tar.gz", hash = "sha256:69aad89ec689526835bf7d2d224badafe52a2def0d719676166755a8eab7ac23", size = 242679, upload-time = "2025-07-01T09:28:08.091Z" }
-
-[[package]]
 name = "lxml"
 version = "6.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -518,7 +512,6 @@ dev = [
     { name = "ansible-lint" },
     { name = "cryptography" },
     { name = "docker" },
-    { name = "libvirt-python" },
     { name = "lxml" },
     { name = "molecule" },
     { name = "molecule-plugins" },
@@ -535,7 +528,6 @@ dev = [
     { name = "ansible-lint", specifier = ">=25.4.0" },
     { name = "cryptography", specifier = ">=45.0.5" },
     { name = "docker", specifier = ">=7.1.0" },
-    { name = "libvirt-python", specifier = ">=11.5.0" },
     { name = "lxml", specifier = ">=6.0.0" },
     { name = "molecule", specifier = ">=25.4.0" },
     { name = "molecule-plugins", specifier = ">=23.7.0" },
