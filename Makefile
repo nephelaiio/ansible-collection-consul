@@ -46,8 +46,8 @@ test: requirements
 install:
 	@uv sync
 
-lint: install
-	uv run yamllint .
+lint: requirements
+	uv run yamllint . -c .yamllint
 	ANSIBLE_COLLECTIONS_PATH=$(MAKEFILE_DIR) \
 	uv run ansible-lint playbooks/
 
