@@ -1,7 +1,7 @@
 ---
 namespace: nephelaiio
 name: consul
-version: 0.2.1
+version: 0.2.2
 readme: README.md
 authors:
   - Ted Cook <358176+teddyphreak@users.noreply.github.com>
@@ -16,4 +16,6 @@ repository: http://github.com/nephelaiio/ansible-collection-consul
 documentation: http://github.com/nephelaiio/ansible-collection-consul
 homepage: http://github.com/nephelaiio/ansible-collection-consul
 issues: http://github.com/nephelaiio/ansible-collection-consul/issues
-build_ignore: []
+build_ignore:
+  - .devbox
+  - .venv
