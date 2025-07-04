@@ -1,9 +1,14 @@
 .PHONY: all ${MAKECMDGOALS}
 
+MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+MAKEFILE_DIR := $(dir $(MAKEFILE_PATH))
+
 MOLECULE_SCENARIO ?= binary
 MOLECULE_DOCKER_IMAGE ?= ubuntu2204
 MOLECULE_DOCKER_COMMAND ?= /lib/systemd/systemd
-MOLECULE_KVM_IMAGE ?= https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+UBUNTU_RELEASE ?= noble
+UBUNTU_KVM_IMAGE = https://cloud-images.ubuntu.com/${UBUNTU_RELEASE}/current/${UBUNTU_RELEASE}-server-cloudimg-amd64.img
+MOLECULE_KVM_IMAGE := $(UBUNTU_KVM_IMAGE)
 GALAXY_API_KEY ?=
 GITHUB_REPOSITORY ?= $$(git config --get remote.origin.url | cut -d: -f 2 | cut -d. -f 1)
 GITHUB_ORG = $$(echo ${GITHUB_REPOSITORY} | cut -d/ -f 1)
@@ -15,39 +20,59 @@ COLLECTION_NAMESPACE = $$(yq '.namespace' < galaxy.yml)
 COLLECTION_NAME = $$(yq '.name' < galaxy.yml)
 COLLECTION_VERSION = $$(yq '.version' < galaxy.yml)
 
+LOGIN_ARGS ?=
+
 all: install version lint test
 
-test: lint
-	poetry run molecule test -s ${MOLECULE_SCENARIO}
+ubuntu:
+	make dependency create prepare \
+		MOLECULE_KVM_IMAGE=${UBUNTU_KVM_IMAGE} \
+		MOLECULE_SCENARIO=${MOLECULE_SCENARIO}
+
+noble ubuntu2404:
+	make ubuntu UBUNTU_RELEASE=noble MOLECULE_SCENARIO=${MOLECULE_SCENARIO}
+
+jammy ubuntu2204:
+	make ubuntu UBUNTU_RELEASE=jammy MOLECULE_SCENARIO=${MOLECULE_SCENARIO}
+
+focal ubuntu2004:
+	make ubuntu UBUNTU_RELEASE=focal MOLECULE_SCENARIO=${MOLECULE_SCENARIO}
+
+test: requirements
+	ANSIBLE_COLLECTIONS_PATH=$(MAKEFILE_DIR) \
+	MOLECULE_KVM_IMAGE=${MOLECULE_KVM_IMAGE} \
+	uv run molecule test -s ${MOLECULE_SCENARIO}
 
 install:
-	@type poetry >/dev/null || pip3 install poetry
-	@type yq || sudo apt-get install -y yq
-	@sudo apt-get install -y libvirt-dev
-	@poetry install --no-root
+	@uv sync
 
-lint: install
-	poetry run yamllint .
+lint: requirements
+	uv run yamllint . -c .yamllint
+	ANSIBLE_COLLECTIONS_PATH=$(MAKEFILE_DIR) \
+	uv run ansible-lint playbooks/
 
 requirements: install
-	@rm -rf ${ROLE_DIR}/*
+	@yq '.roles[].name' -r < roles.yml | xargs -I {} rm -rf roles/{}
 	@python --version
-	@poetry run ansible-galaxy role install \
+	@uv run ansible-galaxy role install \
 		--force --no-deps \
 		--roles-path ${ROLE_DIR} \
 		--role-file ${ROLE_FILE}
-	@poetry run ansible-galaxy collection install \
+	ANSIBLE_COLLECTIONS_PATH=$(MAKEFILE_DIR) \
+	uv run ansible-galaxy collection install \
 		--force-with-deps .
 	@\find ./ -name "*.ymle*" -delete
 
 build: requirements
-	@poetry run ansible-galaxy collection build --force
+	@uv run ansible-galaxy collection build --force
 
 dependency create prepare converge idempotence side-effect verify destroy cleanup reset list:
+	rm -rf ansible_collections/
+	ANSIBLE_COLLECTIONS_PATH=$(MAKEFILE_DIR) \
 	MOLECULE_KVM_IMAGE=${MOLECULE_KVM_IMAGE} \
 	MOLECULE_DOCKER_COMMAND=${MOLECULE_DOCKER_COMMAND} \
 	MOLECULE_DOCKER_IMAGE=${MOLECULE_DOCKER_IMAGE} \
-	poetry run molecule $@ -s ${MOLECULE_SCENARIO}
+	uv run molecule $@ -s ${MOLECULE_SCENARIO}
 
 ifeq (login,$(firstword $(MAKECMDGOALS)))
     LOGIN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -58,20 +83,17 @@ login:
 	MOLECULE_KVM_IMAGE=${MOLECULE_KVM_IMAGE} \
 	MOLECULE_DOCKER_COMMAND=${MOLECULE_DOCKER_COMMAND} \
 	MOLECULE_DOCKER_IMAGE=${MOLECULE_DOCKER_IMAGE} \
-	poetry run molecule $@ -s ${MOLECULE_SCENARIO} ${LOGIN_ARGS}
+	uv run molecule $@ -s ${MOLECULE_SCENARIO} ${LOGIN_ARGS}
 
 ignore:
-	@poetry run ansible-lint --generate-ignore
+	@uv run ansible-lint --generate-ignore
 
 clean: destroy reset
-	@poetry env remove $$(which python) >/dev/null 2>&1 || exit 0
+	@uv env remove $$(which python) >/dev/null 2>&1 || exit 0
 
 publish: build
-	poetry run ansible-galaxy collection publish --api-key ${GALAXY_API_KEY} \
+	uv run ansible-galaxy collection publish --api-key ${GALAXY_API_KEY} \
 		"${COLLECTION_NAMESPACE}-${COLLECTION_NAME}-${COLLECTION_VERSION}.tar.gz"
 
 version:
-	@poetry run molecule --version
-
-debug: version
-	@poetry export --dev --without-hashes
+	@uv run molecule --version

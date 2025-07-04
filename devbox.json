@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.1/.schema/devbox.schema.json",
+  "packages": [
+    "python@3.12.11",
+    "libvirt@latest",
+    "networkmanager@latest",
+    "expect@latest",
+    "gnupg@latest",
+    "xfsprogs@latest",
+    "gnumake@latest",
+    "yq@latest",
+    "uv@latest"
+  ],
+  "env": {},
+  "shell": {
+    "init_hook": [],
+    "scripts": {}
+  }
+}
