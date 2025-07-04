@@ -1,4 +1,8 @@
-nephelaiio-consul-*.tar.gz
+# directories
+.devbox/
 .ansible
 ansible_collections
+
+# globs
+nephelaiio-consul-*.tar.gz
 *.ymle

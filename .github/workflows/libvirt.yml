@@ -29,7 +29,7 @@ jobs:
         scenario:
           - update
         image:
-          - https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+          - noble
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v4
@@ -42,8 +42,8 @@ jobs:
           project-path: "nephelaiio.consul"
           enable-cache: true
 
-      - name: Run molecule tests.
-        run: devbox run -- make test
+      - name: Run molecule tests
+        run: devbox run -- make ${{ matrix.image }} test
         env:
           PY_COLORS: "1"
           ANSIBLE_FORCE_COLOR: "1"
