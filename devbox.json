@@ -8,12 +8,12 @@
     "gnupg@latest",
     "xfsprogs@latest",
     "gnumake@latest",
-    "yq@latest",
-    "uv@latest"
+    "uv@latest",
+    "yq-go@latest"
   ],
   "env": {},
   "shell": {
     "init_hook": [],
-    "scripts": {}
+    "scripts":   {}
   }
 }
