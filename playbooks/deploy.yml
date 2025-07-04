@@ -92,10 +92,11 @@
       ansible.builtin.copy:
         dest: "{{ _consul_backup_bin }}"
         content: |
+          #!/usr/bin/env bash
           cd {{ _consul_backup_path }}
           consul snapshot save consul.$(date +%Y%m%d-%H%M%S).snap
-          stale_backups=$(find ./ -mindepth 1 -maxdepth 1 -type f -mmin {{ _retention }})
-          Removing $(echo $stale_backups | wc -l) expired backups
+          stale_backups=$(find {{ _consul_backup_path }} -mindepth 1 -maxdepth 1 -type f -mmin +{{ _retention }})
+          echo "Removing $(printf '%s\n' $stale_backups | awk 'NF' | wc -l) expired backups"
           echo -n $stale_backups | xargs --no-run-if-empty rm
         owner: consul
         group: consul
