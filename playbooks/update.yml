@@ -25,21 +25,23 @@
       ansible.builtin.shell: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $3}'"
       vars:
         _status: "{{ _consul_node_status.stdout }}"
-        _expected: 'alive'
+        _expected: "alive"
       register: _consul_node_status
       retries: "{{ consul_task_retries | default('10') }}"
       delay: "{{ consul_task_delay | default('10') }}"
       until: _status == _expected
       changed_when: false
+      tags: skip_ansible_lint
       no_log: true
 
     - name: Query consul node cluster status
       ansible.builtin.shell: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $4}'"
       vars:
         _status: "{{ _consul_node_type.stdout }}"
-        _expected: 'server'
+        _expected: "server"
       register: _consul_node_type
       retries: "{{ consul_task_retries | default('10') }}"
       delay: "{{ consul_task_delay | default('10') }}"
       until: _status == _expected
+      tags: skip_ansible_lint
       changed_when: false
