@@ -23,22 +23,27 @@
         _size: "{{ groups[_group] | length }}"
         _sizes: [3, 5, 7]
 
-    - name: Release Consul package holds
-      block:
-        - name: Release Consul apt hold
-          ansible.builtin.dpkg_selections:
-            name: consul
-            selection: install
-          when: ansible_os_family == "Debian"
-          changed_when: false
-          ignore_errors: true
+    - name: Query installed packages
+      ansible.builtin.package_facts:
+        manager: auto
 
-        - name: Release Consul yum lock
-          community.general.yum_versionlock:
-            name: consul
-            state: absent
-          when: ansible_os_family == "RedHat"
-          changed_when: false
+    - name: Release Consul apt hold
+      ansible.builtin.dpkg_selections:
+        name: "{{ _package }}"
+        selection: install
+      vars:
+        _package: consul
+      when:
+        - ansible_os_family == "Debian"
+        - _package in ansible_facts['packages']
+      changed_when: false
+
+    - name: Release Consul yum lock
+      community.general.yum_versionlock:
+        name: consul
+        state: absent
+      when: ansible_os_family == "RedHat"
+      changed_when: false
 
     - name: Deploy Consul cluster
       ansible.builtin.include_role:
