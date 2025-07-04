@@ -1,2 +1,4 @@
 nephelaiio-consul-*.tar.gz
+.ansible
+ansible_collections
 *.ymle
