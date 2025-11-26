@@ -1,8 +1,7 @@
 # directories
 .devbox/
-.ansible
-ansible_collections
+.ansible/
+roles/
 
 # globs
 nephelaiio-consul-*.tar.gz
-*.ymle
