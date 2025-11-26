@@ -91,7 +91,7 @@
         state: directory
         owner: consul
         group: "{{ _consul_group }}"
-        mode: 0740
+        mode: "u=rwx,g=r,o="
 
     - name: Create Consul backup script
       ansible.builtin.copy:
@@ -105,7 +105,7 @@
           echo -n $stale_backups | xargs --no-run-if-empty rm
         owner: consul
         group: consul
-        mode: 0755
+        mode: "u=rwx,go=rx"
       vars:
         _retention: "{{ _consul_backup_retention }}"
 
@@ -126,7 +126,7 @@
           fi
         owner: consul
         group: consul
-        mode: 0755
+        mode: "u=rwx,go=rx"
 
     - name: Create Consul backup MOTD pointers
       ansible.builtin.copy:
@@ -136,7 +136,7 @@
           echo run {{ _consul_backup_bin | basename }} to backup Consul database
           echo run {{ _consul_restore_bin | basename }} to restore Consul database
           echo
-        mode: 0755
+        mode: "u=rwx,go=rx"
       when: ansible_os_family == 'Debian'
 
     - name: Manage Consul backup cronjob
