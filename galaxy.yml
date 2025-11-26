@@ -12,6 +12,8 @@ tags:
   - consul
 dependencies:
   "nephelaiio.plugins": "*"
+  "ansible.windows": "*"
+  "ansible.posix": "*"
 repository: http://github.com/nephelaiio/ansible-collection-consul
 documentation: http://github.com/nephelaiio/ansible-collection-consul
 homepage: http://github.com/nephelaiio/ansible-collection-consul
