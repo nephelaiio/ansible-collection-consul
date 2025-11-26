@@ -1,24 +1,12 @@
 ---
 name: libvirt
-
 on:
   pull_request:
     branches:
       - master
-    paths:
-      - "playbooks/prepare.yml"
-      - "molecule/update/*.yml"
-      - "playbooks/update.yml"
-      - ".github/workflows/libvirt.yml"
-
-defaults:
-  run:
-    working-directory: "nephelaiio.consul"
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-
 jobs:
   libvirt:
     name: libvirt
@@ -28,23 +16,14 @@ jobs:
         scenario:
           - update
         image:
-          - noble
+          - https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
     steps:
-      - name: Check out the codebase
-        uses: actions/checkout@v4
+      - name: Run molecule test
+        uses: pokerops/ansible-utils@master
         with:
-          path: "nephelaiio.consul"
-
-      - name: Install devbox
-        uses: jetify-com/devbox-install-action@v0.13.0
-        with:
-          project-path: "nephelaiio.consul"
-          enable-cache: true
-
-      - name: Run molecule tests
-        run: devbox run -- make ${{ matrix.image }} test
+          run: "make install requirements test"
         env:
           PY_COLORS: "1"
           ANSIBLE_FORCE_COLOR: "1"
-          MOLECULE_KVM_IMAGE: ${{ matrix.image }}
           MOLECULE_SCENARIO: ${{ matrix.scenario }}
+          MOLECULE_KVM_IMAGE: ${{ matrix.image }}

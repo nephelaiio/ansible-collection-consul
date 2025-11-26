@@ -6,3 +6,5 @@ collections:
     type: dir
   - name: nephelaiio.libvirt
   - name: nephelaiio.plugins
+  - name: ansible.posix
+  - name: ansible.windows

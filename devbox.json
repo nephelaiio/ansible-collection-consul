@@ -1,19 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.1/.schema/devbox.schema.json",
-  "packages": [
-    "python@3.12.11",
-    "libvirt@latest",
-    "networkmanager@latest",
-    "expect@latest",
-    "gnupg@latest",
-    "xfsprogs@latest",
-    "gnumake@latest",
-    "uv@latest",
-    "yq-go@latest"
-  ],
-  "env": {},
-  "shell": {
-    "init_hook": [],
-    "scripts":   {}
-  }
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "include": ["github:pokerops/ansible-utils?dir=devbox/molecule"]
 }
