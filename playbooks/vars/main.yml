@@ -1,9 +1,10 @@
 ---
 _consul_hostgroup: "{{ consul_group_name | default('consul') }}"
 _consul_update_skip_hostgroup: "{{ consul_update_skip_group | default('consul_update_skip') }}"
-_consul_release: "{{ consul_release | default('1.21.2-1') }}"
+_consul_release: "{{ consul_release | default('1.22.1-1') }}"
 _consul_release_package: "{{ _consul_release }}"
 _consul_release_binary: "{{ _consul_release | split('-') | first }}"
+_consul_update_reboot: "{{ (consul_update_reboot | default(True)) | bool }}"
 
 _consul_datacenter: "{{ consul_datacenter_name | default('consul') }}"
 _consul_backup_retention: "{{ consul_backup_retention | default('1440') }}"

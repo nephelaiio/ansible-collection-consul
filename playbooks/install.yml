@@ -2,6 +2,5 @@
 - name: Prepare stack nodes
   ansible.builtin.import_playbook: nephelaiio.consul.prepare
 
-
 - name: Deploy proxy nodes
   ansible.builtin.import_playbook: nephelaiio.consul.deploy

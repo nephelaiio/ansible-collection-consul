@@ -7,15 +7,15 @@ dependency:
 driver:
   name: default
 platforms:
-  - name: consul-update-01
+  - name: consul-${MOLECULE_SCENARIO_NAME}-01
     image: "${MOLECULE_KVM_IMAGE}"
     groups:
       - consul
-  - name: consul-update-02
+  - name: consul-${MOLECULE_SCENARIO_NAME}-02
     image: "${MOLECULE_KVM_IMAGE}"
     groups:
       - consul
-  - name: consul-update-03
+  - name: consul-${MOLECULE_SCENARIO_NAME}-03
     image: "${MOLECULE_KVM_IMAGE}"
     groups:
       - consul
