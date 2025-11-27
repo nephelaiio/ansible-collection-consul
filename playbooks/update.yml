@@ -15,7 +15,6 @@
         state: stopped
 
     - name: Update OS packages
-      ansible.builtin.package:
       ansible.builtin.include_role:
         name: nephelaiio.consul.update
       vars:
