@@ -7,7 +7,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: consul-binary-01
+  - name: consul-${MOLECULE_SCENARIO_NAME}-01
     image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2204}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     cgroupns_mode: host
@@ -20,7 +20,7 @@ platforms:
       - /opt
     groups:
       - consul
-  - name: consul-binary-02
+  - name: consul-${MOLECULE_SCENARIO_NAME}-02
     image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2204}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     cgroupns_mode: host
@@ -33,7 +33,7 @@ platforms:
       - /opt
     groups:
       - consul
-  - name: consul-binary-03
+  - name: consul-${MOLECULE_SCENARIO_NAME}-03
     image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2204}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     cgroupns_mode: host

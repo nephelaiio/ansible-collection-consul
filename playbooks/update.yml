@@ -6,9 +6,6 @@
   any_errors_fatal: true
   vars_files:
     - main.yml
-  vars:
-    update_reboot: false
-    update_cache_valid_time: 1
   roles:
     - nephelaiio.consul.update
   tasks:
@@ -17,9 +14,18 @@
         name: consul
         state: stopped
 
+    - name: Update OS packages
+      ansible.builtin.package:
+      ansible.builtin.include_role:
+        name: nephelaiio.consul.update
+      vars:
+        update_reboot: false
+        update_cache_valid_time: 1
+
     - name: Reboot node
       ansible.builtin.reboot:
         reboot_timeout: "{{ consul_reboot_timeout | default(300) }}"
+      when: _consul_update_reboot
 
     - name: Query Consul node cluster status
       ansible.builtin.shell: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $3}'"

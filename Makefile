@@ -1,0 +1,9 @@
+.EXPORT_ALL_VARIABLES:
+export
+
+MOLECULE_SCENARIO ?= repo
+MOLECULE_DOCKER_IMAGE ?= ubuntu2404
+MOLECULE_DOCKER_COMMAND ?= /lib/systemd/systemd
+
+include $(MAKEFILE)
+
