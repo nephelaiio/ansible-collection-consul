@@ -1,7 +1,11 @@
+# roles
+!roles/
+roles/*
+!roles/update/
+
 # directories
 .devbox/
 .ansible/
-roles/
 
 # globs
 nephelaiio-consul-*.tar.gz
