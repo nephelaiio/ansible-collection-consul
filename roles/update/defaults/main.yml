@@ -1,0 +1,4 @@
+---
+consul_upgrade_reboot_timeout: 300
+consul_upgrade_task_retries: 10
+consul_upgrade_task_delay: 10
