@@ -12,7 +12,7 @@
         _consul_hostgroup_server: "{{ _hostgroup_prefix }}_server"
       vars:
         _hostgroup_seed: "{{ query('community.general.random_string', length=8, upper=false, numbers=true, special=false) | first }}"
-        _hostgroup_prefix: "_consul_{{ _consul_hostgroup_seed }}"
+        _hostgroup_prefix: "_consul_{{ _hostgroup_seed }}"
 
     - name: Verify role settings
       ansible.builtin.assert:
