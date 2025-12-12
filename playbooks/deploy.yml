@@ -6,20 +6,31 @@
   vars_files:
     - main.yml
   tasks:
+    - name: Initialize play metadata
+      run_once: true
+      block:
+        - name: Initialize hostgroup prefix
+          ansible.builtin.set_fact:
+            _consul_hostgroup_prefix: "_consul_{{ query('community.general.random_string', length=8, upper=false, numbers=true, special=false) | first }}"
+
+        - name: Initialize group facts
+          ansible.builtin.set_fact:
+            _consul_hostgroup_server: "{{ _consul_hostgroup_prefix }}_server"
+
     - name: Verify role settings
       ansible.builtin.assert:
         that: _consul_role in ['client', 'server']
 
     - name: Group cluster members
       ansible.builtin.group_by:
-        key: "_consul_{{ _consul_role }}"
+        key: "{{ _consul_hostgroup_prefix }}_{{ _consul_role }}"
 
     - name: Verify cluster group settings
       ansible.builtin.assert:
         that: (groups[_group] | length) in _sizes
         fail_msg: "Number of Consul masters must be one of [{{ _sizes | join(',') }}], found {{ _size }}"
       vars:
-        _group: _consul_server
+        _group: "{{ _consul_hostgroup_server }}"
         _size: "{{ groups[_group] | length }}"
         _sizes: [3, 5, 7]
 
@@ -54,8 +65,8 @@
         _release_binary: "{{ _consul_release_binary }}"
         consul_version: "{{ _install_from_repo | ternary(_release_package, _release_binary) }}"
         consul_bootstrap_expect: true
+        consul_group_name: "{{ _consul_hostgroup_server }}"
         consul_bootstrap_expect_value: "{{ groups[consul_group_name] | length }}"
-        consul_group_name: "_consul_server"
         consul_datacenter: "{{ _consul_datacenter | regex_replace('[.]', '_') }}"
         consul_encrypt_enable: false
         consul_os_repo_prerequisites: []
