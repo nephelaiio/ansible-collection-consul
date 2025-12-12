@@ -6,7 +6,7 @@
   vars_files:
     - main.yml
   vars:
-    _consul_hostgroup_prefix: "_consul_{{ query('community.general.random_string', upper=false, numbers=false, special=false) }}"
+    _consul_hostgroup_prefix: "_consul_{{ query('community.general.random_string', upper=false, numbers=false, special=false) | first }}"
     _consul_hostgroup_server: "{{ _consul_hostgroup_prefix }}_server"
   tasks:
     - name: Verify role settings
