@@ -30,7 +30,7 @@
             success_msg: "Consul node type is '{{ _status }}'"
           vars:
             _status: "{{ _consul_node_status.stdout }}"
-            _expected: 'alive'
+            _expected: "alive"
 
     - name: Verify Consul node role
       block:
@@ -46,7 +46,7 @@
             success_msg: "Consul node type is '{{ _status }}'"
           vars:
             _status: "{{ _consul_node_type.stdout }}"
-            _expected: '{{ _consul_role }}'
+            _expected: "{{ _consul_role }}"
 
     - name: Verify Consul package locks
       when: _consul_install_from_repo
