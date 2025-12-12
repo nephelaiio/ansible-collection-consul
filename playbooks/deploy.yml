@@ -6,7 +6,7 @@
   vars_files:
     - main.yml
   vars:
-    _consul_hostgroup_prefix: "__{{ _consul_hostgroup }}"
+    _consul_hostgroup_prefix: "_consul_{{ query('community.general.random_string', upper=false, numbers=false, special=false) }}"
     _consul_hostgroup_server: "{{ _consul_hostgroup_prefix }}_server"
   tasks:
     - name: Verify role settings
@@ -57,8 +57,8 @@
         _release_binary: "{{ _consul_release_binary }}"
         consul_version: "{{ _install_from_repo | ternary(_release_package, _release_binary) }}"
         consul_bootstrap_expect: true
-        consul_bootstrap_expect_value: "{{ groups[consul_group_name] | length }}"
         consul_group_name: "{{ _consul_hostgroup_server }}"
+        consul_bootstrap_expect_value: "{{ groups[consul_group_name] | length }}"
         consul_datacenter: "{{ _consul_datacenter | regex_replace('[.]', '_') }}"
         consul_encrypt_enable: false
         consul_os_repo_prerequisites: []
