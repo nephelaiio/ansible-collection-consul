@@ -5,11 +5,15 @@
   any_errors_fatal: true
   vars_files:
     - main.yml
-  vars:
-    _consul_hostgroup_seed: "{{ query('community.general.random_string', length=8, upper=false, numbers=true, special=false) | first }}"
-    _consul_hostgroup_prefix: "_consul_{{ _consul_hostgroup_seed }}"
-    _consul_hostgroup_server: "{{ _consul_hostgroup_prefix }}_server"
   tasks:
+    - name: Initialize group facts
+      ansible.builtin.set_fact:
+        _consul_hostgroup_prefix: "{{ _hostgroup_prefix }}"
+        _consul_hostgroup_server: "{{ _hostgroup_prefix }}_server"
+      vars:
+        _hostgroup_seed: "{{ query('community.general.random_string', length=8, upper=false, numbers=true, special=false) | first }}"
+        _hostgroup_prefix: "_consul_{{ _consul_hostgroup_seed }}"
+
     - name: Verify role settings
       ansible.builtin.assert:
         that: _consul_role in ['client', 'server']
