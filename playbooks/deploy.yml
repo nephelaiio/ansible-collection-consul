@@ -11,7 +11,7 @@
       block:
         - name: Initialize hostgroup prefix
           ansible.builtin.set_fact:
-            _consul_hostgroup_prefix: "_consul_{{ query('community.general.random_string', length=8, upper=false, numbers=true, special=false) | first }}"
+            _consul_hostgroup_prefix: "_consul"
 
         - name: Initialize group facts
           ansible.builtin.set_fact:
