@@ -6,16 +6,13 @@
   vars_files:
     - main.yml
   tasks:
-    - name: Initialize play metadata
-      run_once: true
-      block:
-        - name: Initialize hostgroup prefix
-          ansible.builtin.set_fact:
-            _consul_hostgroup_prefix: "_{{ consul_hostgroup_prefix | default('consul') }}"
+    - name: Initialize hostgroup prefix
+      ansible.builtin.set_fact:
+        _consul_hostgroup_prefix: "_{{ consul_hostgroup_prefix | default('consul') }}"
 
-        - name: Initialize group facts
-          ansible.builtin.set_fact:
-            _consul_hostgroup_server: "{{ _consul_hostgroup_prefix }}_server"
+    - name: Initialize group facts
+      ansible.builtin.set_fact:
+        _consul_hostgroup_server: "{{ _consul_hostgroup_prefix }}_server"
 
     - name: Verify role settings
       ansible.builtin.assert:
