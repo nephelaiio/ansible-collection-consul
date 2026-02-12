@@ -11,7 +11,7 @@
       block:
         - name: Initialize hostgroup prefix
           ansible.builtin.set_fact:
-            _consul_hostgroup_prefix: "_consul"
+            _consul_hostgroup_prefix: "_{{ consul_hostgroup_prefix | default('consul') }}"
 
         - name: Initialize group facts
           ansible.builtin.set_fact:
