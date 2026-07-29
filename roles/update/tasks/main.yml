@@ -43,9 +43,9 @@
 - name: Query consul node cluster voting status
   ansible.builtin.shell: "consul operator raft list-peers | grep {{ inventory_hostname }} | awk '{print $5}'"
   vars:
-    _status: "{{ _consul_node_type.stdout }}"
+    _status: "{{ _consul_node_voting.stdout | lower }}"
     _expected: "true"
-  register: _consul_node_type
+  register: _consul_node_voting
   retries: "{{ consul_upgrade_task_retries }}"
   delay: "{{ consul_upgrade_task_delay }}"
   until: _status == _expected
