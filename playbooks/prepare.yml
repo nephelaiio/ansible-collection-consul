@@ -5,14 +5,14 @@
   vars_files:
     - main.yml
   tasks:
-    - name: Install yum prerequisites
+    - name: Install dnf prerequisites
       ansible.builtin.package:
         name:
           - acl
           - cronie
           - yum-utils
           - python3-dnf-plugin-versionlock
-      when: ansible_os_family == 'RedHat'
+      when: ansible_facts.os_family == 'RedHat'
 
     - name: Install apt prerequisites
       ansible.builtin.package:
@@ -20,4 +20,4 @@
           - acl
           - cron
           - gpg-agent
-      when: ansible_os_family == 'Debian'
+      when: ansible_facts.os_family == 'Debian'
