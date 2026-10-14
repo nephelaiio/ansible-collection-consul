@@ -1,11 +1,14 @@
-# roles
-!roles/
-roles/*
-!roles/update/
+# files
+.env
+.python-version
 
 # directories
-.devbox/
+.venv/
 .ansible/
-
+.devbox/
+ansible_collections/
+libvirt/
+roles/
 # globs
+
 nephelaiio-consul-*.tar.gz

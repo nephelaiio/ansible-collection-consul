@@ -42,7 +42,7 @@
       vars:
         _package: consul
       when:
-        - ansible_os_family == "Debian"
+        - ansible_facts.os_family == "Debian"
         - _package in ansible_facts['packages']
       changed_when: false
 
@@ -50,7 +50,7 @@
       community.general.yum_versionlock:
         name: consul
         state: absent
-      when: ansible_os_family == "RedHat"
+      when: ansible_facts.os_family == "RedHat"
       changed_when: false
 
     - name: Deploy Consul cluster
@@ -83,14 +83,14 @@
           ansible.builtin.dpkg_selections:
             name: consul
             selection: hold
-          when: ansible_os_family == "Debian"
+          when: ansible_facts.os_family == "Debian"
           changed_when: false
 
         - name: Lock Consul yum package
           community.general.yum_versionlock:
             name: consul
             state: present
-          when: ansible_os_family == "RedHat"
+          when: ansible_facts.os_family == "RedHat"
           changed_when: false
 
     - name: Create Consul backup path
@@ -145,7 +145,7 @@
           echo run {{ _consul_restore_bin | basename }} to restore Consul database
           echo
         mode: "u=rwx,go=rx"
-      when: ansible_os_family == 'Debian'
+      when: ansible_facts.os_family == 'Debian'
 
     - name: Manage Consul backup cronjob
       ansible.builtin.cron:

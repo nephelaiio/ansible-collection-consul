@@ -18,7 +18,7 @@
     - name: Verify Consul cluster status
       block:
         - name: Query Consul node cluster status
-          ansible.builtin.shell: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $3}'"
+          ansible.builtin.command: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $3}'"
           register: _consul_node_status
           changed_when: false
           no_log: true
@@ -35,7 +35,7 @@
     - name: Verify Consul node role
       block:
         - name: Query Consul node role
-          ansible.builtin.shell: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $4}'"
+          ansible.builtin.command: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $4}'"
           register: _consul_node_type
           changed_when: false
 
@@ -54,11 +54,11 @@
         - name: Verify apt Consul package lock
           ansible.builtin.command:
             cmd: "apt-mark showhold | grep consul"
-          when: ansible_os_family == "Debian"
+          when: ansible_facts.os_family == "Debian"
           changed_when: false
 
         - name: Verify yum package lock
           ansible.builtin.command:
             cmd: "grep consul /etc/yum/pluginconf.d/versionlock.list"
-          when: ansible_os_family == "RedHat"
+          when: ansible_facts.os_family == "RedHat"
           changed_when: false
