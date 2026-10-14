@@ -18,10 +18,11 @@
     - name: Verify Consul cluster status
       block:
         - name: Query Consul node cluster status
-          ansible.builtin.command: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $3}'"
+          ansible.builtin.shell: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $3}'"
           register: _consul_node_status
           changed_when: false
           no_log: true
+          tags: skip_ansible_lint
 
         - name: Check Consul node cluster status
           ansible.builtin.assert:
@@ -35,9 +36,10 @@
     - name: Verify Consul node role
       block:
         - name: Query Consul node role
-          ansible.builtin.command: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $4}'"
+          ansible.builtin.shell: "consul members listNode | grep {{ inventory_hostname }} | awk '{print $4}'"
           register: _consul_node_type
           changed_when: false
+          tags: skip_ansible_lint
 
         - name: Check Consul node role
           ansible.builtin.assert:

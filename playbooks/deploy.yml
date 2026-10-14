@@ -66,7 +66,7 @@
         consul_bootstrap_expect_value: "{{ groups[consul_group_name] | length }}"
         consul_datacenter: "{{ _consul_datacenter | regex_replace('[.]', '_') }}"
         consul_encrypt_enable: false
-        consul_os_repo_prerequisites: []
+        consul_os_repo_prerequisites: "{{ [] | length > 0 }}"
         consul_bin_path: "{{ _install_from_repo | ternary('/usr/bin', '/usr/local/bin') }}"
         consul_install_dependencies: false
         consul_node_role: "{{ _consul_role }}"
